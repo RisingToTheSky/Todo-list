@@ -1,8 +1,8 @@
 import { Project } from "./project";
 
-class projectList {
+class ProjectList {
     constructor() {
-        this.projects = projects;
+        this.projects = [];
     }
 
     addProjectToProjectList(project) {
@@ -14,4 +14,4 @@ class projectList {
     }
 }
 
-export {projectList};
+export {ProjectList};
