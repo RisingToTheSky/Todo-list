@@ -4,6 +4,7 @@ import { ProjectList} from "../objects/projectList";
 import { createProjectDialog } from "./projectDialog";
 import { createTaskDialog } from "./taskDialog";
 import { generateProjectTitle } from "./projectsPage";
+import { generateTasks } from "./projectsPage";
 
 const main = document.getElementById("main");
 const sidebar = document.querySelector(".sidebar");    
@@ -31,7 +32,9 @@ function createTask() {
 
     let activeProjectTitle = document.querySelector(".project.active").textContent;
     let activeProject = projectList.projects.find(project => project.title === activeProjectTitle);
+
     activeProject.addTaskToProject(task);
+    generateTasks(activeProject);
 }
 
 function createProject() {
@@ -75,6 +78,10 @@ function initialPage() {
                 current.classList.remove('active');
                 project.classList.add('active');
                 generateProjectTitle(project);
+                let activeProjectTitle = document.querySelector(".project.active").textContent;
+                let activeProject = projectList.projects.find(project => project.title === activeProjectTitle);
+
+                generateTasks(activeProject);
             });
         });
     });

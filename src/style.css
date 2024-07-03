@@ -2,3 +2,77 @@
     margin: 0;
     padding: 0;
 }
+
+body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 1fr 10fr;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-row: 1 / 2;
+    grid-column: 1 / 4;
+}
+
+.sidebar {
+    display: flex;
+    padding: 25px;
+    flex-direction: column;
+    gap: 10px;
+    grid-row: 2 / 3;
+}
+
+.projectContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.main {
+    grid-column: 2 / 4;
+}
+
+button {
+    width: 137.28px;
+    cursor: pointer;
+}
+
+.active {
+    background-color: blue;
+}
+
+.taskContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 500px;
+    padding: 5px;
+    height: 30px;
+    margin-right: auto;
+    border: 1px solid black;
+}
+
+.priority {
+    background-color: green;
+}
+
+.priority, .complete {
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+}
+
+.edit {
+    width: 25px;
+    height: 20px;
+}
