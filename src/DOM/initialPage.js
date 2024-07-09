@@ -7,12 +7,14 @@ import { generateProjectTitle } from "./projectsPage";
 import { generateTasks } from "./projectsPage";
 import { createEditDialog } from "./editDialog";
 import { format } from "date-fns";
+import { saveToStorage } from "../localStorage/localStorage";
 
 const main = document.getElementById("main");
 const sidebar = document.querySelector(".sidebar");    
 const projectContainer = document.createElement("div");
 projectContainer.classList.add("projectContainer");
 let projectList = new ProjectList();
+
 
 function createDefaultProject() {
     let title = "Today";
@@ -38,11 +40,13 @@ function createTask() {
         let task = new Task(taskTitle, taskDescription, taskPriority);
         activeProject.addTaskToProject(task);
         generateTasks(activeProject);
+        saveToStorage(projectList);
     } else {
         const date = format(taskDueDate, "dd-MM-yyyy");
         let task = new Task(taskTitle, taskDescription, date, taskPriority);
         activeProject.addTaskToProject(task);
         generateTasks(activeProject);
+        saveToStorage(projectList);
     }
 }
 
@@ -50,6 +54,7 @@ function createProject() {
     let projectTitle = document.getElementById("projectTitle").value;
     let project = new Project(projectTitle);
     projectList.addProjectToProjectList(project);
+    saveToStorage(projectList);
     let projectButton = document.createElement("button");
     projectButton.textContent = projectTitle;
     projectButton.classList.add("project");
@@ -124,4 +129,6 @@ function initialPage() {
     });
 }
 
+
 export {initialPage};
+export default projectList;

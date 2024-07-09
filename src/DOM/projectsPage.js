@@ -1,3 +1,6 @@
+import { saveToStorage } from "../localStorage/localStorage";
+import projectList from "./initialPage";
+
 const main = document.getElementById("main");
 const taskContainer = document.createElement("div");
 taskContainer.classList.add("taskContainer");
@@ -8,6 +11,10 @@ h3.textContent = "Today";
 
 function generateProjectTitle(projectButton) {
     h3.textContent = projectButton.textContent;
+}
+
+function updateTask() {
+    
 }
 
 function generateTasks(activeProject) {
@@ -24,6 +31,8 @@ function generateTasks(activeProject) {
 
         completeTaskButton.addEventListener("click", () =>{
             activeProject.setTaskAsComplete(task.uniqueId);
+            localStorage.removeItem(task);
+            saveToStorage(projectList);
             taskCard.remove();
         })
 
@@ -43,6 +52,18 @@ function generateTasks(activeProject) {
         editTask.textContent = "edit";
         editTask.classList.add("edit");
         taskCard.appendChild(editTask);
+
+        const editDialog = document.querySelector(".editDialog");
+        editTask.addEventListener("click", () => {
+            editDialog.showModal();
+            editDialog.classList.remove("hidden");
+        })
+
+        const submitEditedTask = document.querySelector(".editTask");
+        submitEditedTask.addEventListener("click", () => {
+            updateTask();
+            editDialog.classList.add("hidden");
+        })
     });
 }
 
