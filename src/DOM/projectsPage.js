@@ -70,7 +70,8 @@ function generateTasks(activeProject) {
         taskCard.appendChild(editTask);
 
         const editDialog = document.querySelector(".editDialog");
-        editTask.addEventListener("click", () => {
+        editTask.addEventListener("click", (e) => {
+            editTask.classList.add("editActive");
             changeEditDialog(task);
             editDialog.showModal();
             editDialog.classList.remove("hidden");
@@ -78,9 +79,12 @@ function generateTasks(activeProject) {
 
         const submitEditedTask = document.querySelector(".editTask");
         submitEditedTask.addEventListener("click", () => {
-            updateTask(task, taskTitle, taskDueDate, activeProject.title);
-            saveToStorage(projectList);
-            editDialog.classList.add("hidden");
+            if (editTask.classList.contains("editActive")) {
+                updateTask(task, taskTitle, taskDueDate, activeProject.title);
+                saveToStorage(projectList);
+                editDialog.classList.add("hidden");
+                editTask.classList.remove("editActive");
+            }
         })
     });
 }
