@@ -1,5 +1,7 @@
 import { saveToStorage } from "../localStorage/localStorage";
 import projectList from "./initialPage";
+import { format } from "date-fns";
+import { changeEditDialog } from "./editDialog";
 
 const main = document.getElementById("main");
 const taskContainer = document.createElement("div");
@@ -13,8 +15,22 @@ function generateProjectTitle(projectButton) {
     h3.textContent = projectButton.textContent;
 }
 
-function updateTask() {
-    
+function updateTask(task, title, dueDate, project) {
+    let taskTitle = document.getElementById("editTaskTitle").value;
+    let taskDescription = document.getElementById("editTaskDescription").value;
+    let taskDueDate = document.getElementById("editTaskDueDate").value;
+    let taskPriority = document.getElementsByName("priority").checked;
+    if (project !== "Today") {
+        const date = format(taskDueDate, "dd-MM-yyyy");
+        task.updateTask(taskTitle, taskDescription, date, taskPriority);
+        title.textContent = taskTitle;
+        dueDate.textContent = date;
+        saveToStorage(projectList);
+    } else {
+        task.updateTask(taskTitle, taskDescription, taskPriority);
+        title.textContent = taskTitle;
+        saveToStorage(projectList);
+    }
 }
 
 function generateTasks(activeProject) {
@@ -55,13 +71,15 @@ function generateTasks(activeProject) {
 
         const editDialog = document.querySelector(".editDialog");
         editTask.addEventListener("click", () => {
+            changeEditDialog(task);
             editDialog.showModal();
             editDialog.classList.remove("hidden");
         })
 
         const submitEditedTask = document.querySelector(".editTask");
         submitEditedTask.addEventListener("click", () => {
-            updateTask();
+            updateTask(task, taskTitle, taskDueDate, activeProject.title);
+            saveToStorage(projectList);
             editDialog.classList.add("hidden");
         })
     });
