@@ -15,22 +15,16 @@ function generateProjectTitle(projectButton) {
     h3.textContent = projectButton.textContent;
 }
 
-function updateTask(task, title, dueDate, project) {
+function updateTask(task, title, dueDate) {
     let taskTitle = document.getElementById("editTaskTitle").value;
     let taskDescription = document.getElementById("editTaskDescription").value;
     let taskDueDate = document.getElementById("editTaskDueDate").value;
-    let taskPriority = document.getElementsByName("priority").checked;
-    if (project !== "Today") {
-        const date = format(taskDueDate, "dd-MM-yyyy");
-        task.updateTask(taskTitle, taskDescription, date, taskPriority);
-        title.textContent = taskTitle;
-        dueDate.textContent = date;
-        saveToStorage(projectList);
-    } else {
-        task.updateTask(taskTitle, taskDescription, taskPriority);
-        title.textContent = taskTitle;
-        saveToStorage(projectList);
-    }
+    let taskPriority = document.querySelector("#editTaskPriority").value;
+    const date = format(taskDueDate, "dd-MM-yyyy");
+    task.updateTask(taskTitle, taskDescription, date, taskPriority);
+    title.textContent = taskTitle;
+    dueDate.textContent = date;
+    saveToStorage(projectList);
 }
 
 function generateTasks(activeProject) {
@@ -52,7 +46,14 @@ function generateTasks(activeProject) {
             taskCard.remove();
         })
 
-        const priorityButton = document.createElement("button");
+        const priorityButton = document.createElement("div");
+        if (task.priority === "LOW") {
+            priorityButton.style.backgroundColor = "green";
+        } else if (task.priority === "MEDIUM") {
+            priorityButton.style.backgroundColor = "orange";
+        } else {
+            priorityButton.style.backgroundColor = "red";
+        }
         priorityButton.classList.add("priority");
         taskCard.appendChild(priorityButton);
 
@@ -70,7 +71,7 @@ function generateTasks(activeProject) {
         taskCard.appendChild(editTask);
 
         const editDialog = document.querySelector(".editDialog");
-        editTask.addEventListener("click", (e) => {
+        editTask.addEventListener("click", () => {
             editTask.classList.add("editActive");
             changeEditDialog(task);
             editDialog.showModal();
@@ -81,6 +82,13 @@ function generateTasks(activeProject) {
         submitEditedTask.addEventListener("click", () => {
             if (editTask.classList.contains("editActive")) {
                 updateTask(task, taskTitle, taskDueDate, activeProject.title);
+                if (task.priority === "LOW") {
+                    priorityButton.style.backgroundColor = "green";
+                } else if (task.priority === "MEDIUM") {
+                    priorityButton.style.backgroundColor = "orange";
+                } else {
+                    priorityButton.style.backgroundColor = "red";
+                }
                 saveToStorage(projectList);
                 editDialog.classList.add("hidden");
                 editTask.classList.remove("editActive");

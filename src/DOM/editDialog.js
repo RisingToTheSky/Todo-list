@@ -3,19 +3,13 @@ function createEditDialog() {
     const dialog = document.createElement("dialog");
     const form = document.createElement("form");
     const h3 = document.createElement("h3");
-    const low = document.createElement("p");
-    const medium = document.createElement("p");
-    const high = document.createElement("p");
-    const container1 = document.createElement("div");
-    const container2 = document.createElement("div");
-    const container3 = document.createElement("div");
     const titleElement = document.createElement("input");
     const descriptionElement = document.createElement("input");
     const dueDateElement = document.createElement("input");
-    const priorities = document.createElement("div");
-    const priorityElementLow = document.createElement("button");
-    const priorityElementMedium = document.createElement("button");
-    const priorityElementHigh = document.createElement("button");
+    const priorities = document.createElement("select");
+    const priorityElementLow = document.createElement("option");
+    const priorityElementMedium = document.createElement("option");
+    const priorityElementHigh = document.createElement("option");
     const editTaskButton = document.createElement("button");
 
     titleElement.type = "text";
@@ -38,18 +32,22 @@ function createEditDialog() {
     dueDateElement.min = new Date().toISOString().split("T")[0];
     dueDateElement.name = "date";
     
-    priorityElementLow.id = "priorityLow";
-    priorityElementMedium.id = "priorityMedium";
-    priorityElementHigh.id = "priorityHigh";
+    priorities.id = "editTaskPriority";
+    priorityElementLow.id = "priority";
+    priorityElementMedium.id = "priority";
+    priorityElementHigh.id = "priority";
 
     priorityElementLow.name = "priority";
     priorityElementMedium.name = "priority";
     priorityElementHigh.name = "priority";
 
-    low.textContent = "(LOW)";
-    medium.textContent = "(MEDIUM)";
-    high.textContent = "(HIGH)";
-
+    priorityElementLow.value = "LOW";
+    priorityElementMedium.value = "MEDIUM";
+    priorityElementHigh.value = "HIGH";
+    
+    priorityElementLow.textContent = "LOW";
+    priorityElementMedium.textContent = "MEDIUM";
+    priorityElementHigh.textContent = "HIGH";
     editTaskButton.textContent = "Edit Task";
     editTaskButton.classList.add("editTask");
     h3.textContent = "Edit Task";
@@ -59,17 +57,11 @@ function createEditDialog() {
     form.appendChild(titleElement);
     form.appendChild(descriptionElement);
     form.appendChild(dueDateElement);
-    priorities.appendChild(container1);
-    priorities.appendChild(container2);
-    priorities.appendChild(container3);
-    container1.appendChild(priorityElementLow);
-    container1.appendChild(low);
-    container2.appendChild(priorityElementMedium);
-    container2.appendChild(medium);
-    container3.appendChild(priorityElementHigh);
-    container3.appendChild(high);
 
     form.appendChild(priorities);
+    priorities.appendChild(priorityElementLow);
+    priorities.appendChild(priorityElementMedium);
+    priorities.appendChild(priorityElementHigh);
     form.appendChild(editTaskButton);
     body.appendChild(dialog);
 }
@@ -78,11 +70,11 @@ function changeEditDialog(task) {
     const editTaskTitle = document.getElementById("editTaskTitle");
     const editTaskDescription = document.getElementById("editTaskDescription");
     const editTaskDueDate = document.getElementById("editTaskDueDate");
-    const priorities = document.querySelector(".priorities");
+    const priorities = document.querySelector("#editTaskPriority");
     editTaskTitle.value = task.title;
     editTaskDescription.value = task.description;
     editTaskDueDate.value = task.dueDate;
-    // priorities.textContent = task.priority;
+    priorities.value = task.priority;
 }
 
 export {createEditDialog};

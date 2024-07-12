@@ -3,18 +3,18 @@ import { Project } from "../objects/project";
 import { ProjectList} from "../objects/projectList";
 import { createProjectDialog } from "./projectDialog";
 import { createTaskDialog } from "./taskDialog";
+import { createEditDialog } from "./editDialog";
 import { generateProjectTitle } from "./projectsPage";
 import { generateTasks } from "./projectsPage";
-import { createEditDialog } from "./editDialog";
 import { format } from "date-fns";
 import { saveToStorage } from "../localStorage/localStorage";
+import { getDataFromStorage } from "../localStorage/localStorage";
 
 const main = document.getElementById("main");
 const sidebar = document.querySelector(".sidebar");    
 const projectContainer = document.createElement("div");
 projectContainer.classList.add("projectContainer");
 let projectList = new ProjectList();
-
 
 function createDefaultProject() {
     let title = "Today";
@@ -31,23 +31,15 @@ function createTask() {
     let taskTitle = document.getElementById("taskTitle").value;
     let taskDescription = document.getElementById("taskDescription").value;
     let taskDueDate = document.getElementById("taskDueDate").value;
-    let taskPriority = document.getElementsByName("priority").checked;
+    let taskPriority = document.querySelector("#taskPriority").value;
 
     let activeProjectTitle = document.querySelector(".project.active").textContent;
     let activeProject = projectList.projects.find(project => project.title === activeProjectTitle);
-
-    if (activeProjectTitle === "Today") {
-        let task = new Task(taskTitle, taskDescription, taskPriority);
-        activeProject.addTaskToProject(task);
-        generateTasks(activeProject);
-        saveToStorage(projectList);
-    } else {
-        const date = format(taskDueDate, "dd-MM-yyyy");
-        let task = new Task(taskTitle, taskDescription, date, taskPriority);
-        activeProject.addTaskToProject(task);
-        generateTasks(activeProject);
-        saveToStorage(projectList);
-    }
+    const date = format(taskDueDate, "dd-MM-yyyy");
+    let task = new Task(taskTitle, taskDescription, date, taskPriority);
+    activeProject.addTaskToProject(task);
+    generateTasks(activeProject);
+    saveToStorage(projectList);
 }
 
 function createProject() {
