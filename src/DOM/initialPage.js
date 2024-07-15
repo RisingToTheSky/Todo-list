@@ -16,8 +16,44 @@ const projectContainer = document.createElement("div");
 projectContainer.classList.add("projectContainer");
 let projectList = new ProjectList();
 
+function loadProjects() {
+    const storedData = getDataFromStorage();
+    if (storedData) {
+        projectList = Object.assign(new ProjectList(), storedData);
+        projectList.projects = projectList.projects.map(projectData => {
+            let project = Object.assign(new Project(), projectData);
+            project.tasks = project.tasks.map(taskData => Object.assign(new Task(), taskData));
+            return project;
+        });
+
+        projectList.projects.forEach(project => {
+            let projectButton = document.createElement("button");
+            projectButton.textContent = project.title;
+            projectButton.classList.add("project");
+            if (project.title === "The Odin Project") {
+                projectButton.classList.add("active");
+            }
+            projectContainer.appendChild(projectButton);
+        });
+
+        let activeProject = projectList.projects.find(project => project.title === "Today");
+        if (activeProject) {
+            generateTasks(activeProject);
+        }
+
+        let defaultProject = projectList.projects.find(project => project.title === "The Odin Project");
+        if (!defaultProject) {
+            defaultProject = createDefaultProject();
+        }
+
+    } else {
+        const defaultProject = createDefaultProject();
+        generateTasks(defaultProject);
+    }
+}
+
 function createDefaultProject() {
-    let title = "Today";
+    let title = "The Odin Project";
     let defaultProject = new Project(title);
     projectList.addDefaultProject(defaultProject);
 
@@ -25,6 +61,7 @@ function createDefaultProject() {
     defaultProjectButton.textContent = defaultProject.title;
     defaultProjectButton.classList.add("project", "active");
     projectContainer.appendChild(defaultProjectButton);
+    saveToStorage(projectList);
 }
 
 function createTask() {
@@ -48,8 +85,8 @@ function createProject() {
     projectList.addProjectToProjectList(project);
     saveToStorage(projectList);
     let projectButton = document.createElement("button");
-    projectButton.textContent = projectTitle;
     projectButton.classList.add("project");
+    projectButton.textContent = projectTitle;
     projectContainer.appendChild(projectButton);
     console.log(projectList);
 }
@@ -61,6 +98,7 @@ function initialPage() {
     main.appendChild(addTask);
 
     const projects = document.createElement("button");
+    projects.classList.add("projects");
     projects.textContent = "Projects";
     sidebar.appendChild(projects);
 
@@ -71,11 +109,10 @@ function initialPage() {
     addProject.classList.add("addProject");
     sidebar.appendChild(addProject);
 
-
-    createDefaultProject();
     createProjectDialog();
     createTaskDialog();
     createEditDialog();
+    loadProjects();
     
     projectContainer.addEventListener("click" , () => {
         const projectButtons = document.querySelectorAll(".project");

@@ -1,8 +1,6 @@
 class Project {
-    constructor(title, description, dueDate) {
+    constructor(title) {
         this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
         this.uniqueId = Date.now();
         this.tasks = [];
     }

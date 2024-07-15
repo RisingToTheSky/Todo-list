@@ -37,10 +37,19 @@ header {
 }
 
 button {
-    width: 137.28px;
+    width: 200px;
     cursor: pointer;
+    background: none;
 }
 
+.projects {
+    background: none;
+    border: none;
+}
+
+.projects:hover {
+    cursor: default;
+}
 .active {
     background-color: blue;
 }
@@ -62,17 +71,60 @@ button {
     border: 1px solid black;
 }
 
-.priority {
-    background-color: green;
+#priorityLow, #priorityMedium, #priorityHigh {
+    width: 60px;
+    height: 20px;
 }
 
-.priority, .complete {
+.priority, .complete{
     border-radius: 100%;
     width: 25px;
     height: 25px;
 }
 
+.priority {
+    background-color: gray;
+}
+
 .edit {
-    width: 25px;
+    width: 30px;
     height: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+dialog {
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 250px;
+    background-color: lightgray;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+dialog::backdrop {
+    filter: blur(8px);
+}
+
+.priorities {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.priorities > div {
+    display: flex;
+    gap: 10px;
 }

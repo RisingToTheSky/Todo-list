@@ -14,7 +14,7 @@ function createEditDialog() {
 
     titleElement.type = "text";
     titleElement.maxLength = "20";
-    descriptionElement.type = "text";
+    descriptionElement.type = "textarea";
     dueDateElement.type = "date";
     editTaskButton.type = "submit";
 

@@ -10,6 +10,7 @@ function createProjectDialog() {
     addProjectButton.type = "submit";
 
     dialog.classList.add("projectDialog");
+    dialog.classList.add("hidden");
     form.action = "#";
     form.method = "dialog";
     form.id = "Project-Form";

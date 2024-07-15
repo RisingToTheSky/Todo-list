@@ -17,7 +17,7 @@ function createTaskDialog() {
     titleElement.placeholder = "Title";
     titleElement.id = "taskTitle";
 
-    descriptionElement.type = "text";
+    descriptionElement.type = "textarea";
     descriptionElement.id = "taskDescription";
     descriptionElement.placeholder = "Description";
 

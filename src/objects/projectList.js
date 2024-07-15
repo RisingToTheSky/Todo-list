@@ -1,5 +1,3 @@
-import { Project } from "./project";
-
 class ProjectList {
     constructor() {
         this.projects = [];

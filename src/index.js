@@ -1,4 +1,4 @@
 import './style.css';
-import { initialPage } from './DOM/page';
+import { initialPage } from './DOM/initialPage';
 
 initialPage();

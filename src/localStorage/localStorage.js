@@ -2,9 +2,8 @@ function saveToStorage(projectList) {
     localStorage.setItem("projectList", JSON.stringify(projectList));
 }
 
-function getDataFromStorage(item) {
-    const array = JSON.parse(localStorage.getItem(item));
-    return array;
+function getDataFromStorage() {
+    return JSON.parse(localStorage.getItem("projectList")) || [];
 }
 
 export {saveToStorage};

@@ -9,7 +9,7 @@ taskContainer.classList.add("taskContainer");
 const h3 = document.createElement("h3");
 main.appendChild(h3);
 main.appendChild(taskContainer);
-h3.textContent = "Today";
+h3.textContent = "The Odin Project";
 
 function generateProjectTitle(projectButton) {
     h3.textContent = projectButton.textContent;
