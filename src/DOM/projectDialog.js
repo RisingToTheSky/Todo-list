@@ -16,12 +16,11 @@ function createProjectDialog() {
     form.id = "Project-Form";
     titleElement.id = "projectTitle";
     titleElement.placeholder = "Title";
-    titleElement.maxLength = "20";
-
+    titleElement.maxLength = "40";
+    titleElement.name = "title";
     addProjectButton.textContent = "Add Project";
     addProjectButton.classList.add("submitProject");
     h3.textContent = "Project";
-
     dialog.appendChild(form);
     form.appendChild(h3);
     form.appendChild(titleElement);

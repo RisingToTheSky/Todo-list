@@ -32,6 +32,7 @@ function loadProjects() {
             projectButton.classList.add("project");
             if (project.title === "The Odin Project") {
                 projectButton.classList.add("active");
+                generateTasks(project);
             }
             projectContainer.appendChild(projectButton);
         });
@@ -70,6 +71,10 @@ function createTask() {
     let taskDueDate = document.getElementById("taskDueDate").value;
     let taskPriority = document.querySelector("#taskPriority").value;
 
+    if (taskTitle === "" || taskDueDate === "" || taskPriority === "") {
+        alert("You need to fill this in");
+        return;
+    }
     let activeProjectTitle = document.querySelector(".project.active").textContent;
     let activeProject = projectList.projects.find(project => project.title === activeProjectTitle);
     const date = format(taskDueDate, "dd-MM-yyyy");
@@ -81,6 +86,10 @@ function createTask() {
 
 function createProject() {
     let projectTitle = document.getElementById("projectTitle").value;
+    if (projectTitle === "") {
+        alert("Fill in a title!");
+        return;
+    }
     let project = new Project(projectTitle);
     projectList.addProjectToProjectList(project);
     saveToStorage(projectList);
@@ -88,16 +97,15 @@ function createProject() {
     projectButton.classList.add("project");
     projectButton.textContent = projectTitle;
     projectContainer.appendChild(projectButton);
-    console.log(projectList);
 }
 
 function initialPage() {
     const addTask = document.createElement("button");
-    addTask.textContent = "Add Task";
+    addTask.textContent = "+ Add Task";
     addTask.classList.add("addTask");
     main.appendChild(addTask);
 
-    const projects = document.createElement("button");
+    const projects = document.createElement("p");
     projects.classList.add("projects");
     projects.textContent = "Projects";
     sidebar.appendChild(projects);
@@ -105,7 +113,7 @@ function initialPage() {
     sidebar.appendChild(projectContainer);
 
     const addProject = document.createElement("button");
-    addProject.textContent = "Add Project";
+    addProject.textContent = "+ Add Project";
     addProject.classList.add("addProject");
     sidebar.appendChild(addProject);
 
